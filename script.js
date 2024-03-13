@@ -26,6 +26,7 @@ function round() {
     let choiceComputer = getComputerChoice();
     // Second we get the player's choice rock, paper or scissors
     let choicePlayer = prompt("Choose between the rock, paper and the scissors");
+    let choiceWinner = null;
     // If we need to compare it to rock paper and scissors we need to make choicePlayer insensitive to case, we'll convert the choice to lower case in this case
     choicePlayer = choicePlayer.toLowerCase();
     // Using the comparison function we know the winner
@@ -33,6 +34,7 @@ function round() {
     console.log(`The computer choice is ${choiceComputer}`);
     console.log(`The player choice is ${choicePlayer}`);
     console.log(choiceWinner);
+    return choiceWinner;
 }
 
 /* We create a function to know the winner
@@ -95,5 +97,46 @@ function multipleChoiceCompareProtocol(choiceComputer, choicePlayer) {
     return choiceWinner;
 }
 
-round();
+// We write here the core of our game, it will be a loop, it will do only five iterations and we're using a for loop, together with a new score function now
+
+let scorePlayer = 0;
+let scoreComputer = 0;
+let choiceWinner = null;
+let scoreVariable = [scorePlayer, scoreComputer];
+
+for (i = 1; i <= 5 ; i++) {
+    choiceWinner = round();
+    scoreVariable = score(choiceWinner, scoreVariable);
+}
+
+console.log(`---------------------------------`);
+console.log(`SCORE`);
+console.log(`The computer score is ${scoreVariable[1]}`);
+console.log(`The player score is ${scoreVariable[0]}`);
+if (scoreVariable[0] > scoreVariable[1]) {
+    console.log("You win");
+} else if (scoreVariable[0] < scoreVariable[1]){
+    console.log("You lose");
+} else {
+    console.log("Nice draw");
+}
+console.log(`---------------------------------`);
+
+
+/* We're creating a good score function
+        INPUTS: chiceWinner
+        OUTPUTS: player score, computer score together in a variable score = [player score, computer score]
+   Now we're going to see what is inserted in the choiceWinner, we're going to see if it contains winner loser or if it contains draw, let's build this
+*/
+
+function score(choiceWinner, scoreVariable) {
+    if (choiceWinner.includes("winner") || choiceWinner.includes("Draw")) {
+        scoreVariable[0] = scoreVariable[0] + 1;
+    }
+    if (choiceWinner.includes("loser") || choiceWinner.includes("Draw")) {
+        scoreVariable[1] = scoreVariable[1] + 1;
+    }
+    return scoreVariable;
+}
+
 
