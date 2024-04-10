@@ -1,0 +1,13 @@
+.head {
+    text-align: center;
+    color: beige;
+    background-color: blue;
+    margin-top: -20px;
+}
+
+.centro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
