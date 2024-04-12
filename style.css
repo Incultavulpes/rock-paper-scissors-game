@@ -11,3 +11,12 @@
     justify-content: center;
     gap: 40px;
 }
+
+div.game {
+    display: flex;
+    gap: 600px;
+    background-color: slategray;
+    margin-top: 200px;
+    align-items: center;
+    justify-content: center;
+}

@@ -83,49 +83,46 @@ let scoreComputer = 0;
 let choiceWinner = null;
 let scoreVariable = [scorePlayer, scoreComputer];
 
-/*
-for (i = 1; i <= 5 ; i++) {
-    choiceWinner = round();
-    scoreVariable = score(choiceWinner, scoreVariable);
-}
-*/
-
 const btnRock = document.querySelector(".one .button");
 const btnPaper = document.querySelector(".two .button");
 const btnScissors = document.querySelector(".three .button");
 
-// Argument problem may be solved by object event, write all the things necessary for this finality
+const textPerson = document.querySelector(".person .sc");
+const textComputer = document.querySelector(".computer .sc");
 
-btnRock.addEventListener("click", function () {
-    choicePlayer = "rock";
-    choiceWinner = round();
-    scoreVariable = score(choiceWinner, scoreVariable);
-});
-btnPaper.addEventListener("click", function () {
-    choicePlayer = "paper";
-    choiceWinner = round();
-    scoreVariable = score(choiceWinner, scoreVariable);
-});
-btnScissors.addEventListener("click", function () {
-    choicePlayer = "scissors";
-    choiceWinner = round();
-    scoreVariable = score(choiceWinner, scoreVariable);
-});
+const gameResultDisplay = document.querySelector(".game-result");
 
-/*
-console.log(`---------------------------------`);
-console.log(`SCORE`);
-console.log(`The computer score is ${scoreVariable[1]}`);
-console.log(`The player score is ${scoreVariable[0]}`);
-if (scoreVariable[0] > scoreVariable[1]) {
-    console.log("You win");
-} else if (scoreVariable[0] < scoreVariable[1]){
-    console.log("You lose");
-} else {
-    console.log("Nice draw");
+const initialize = function (e) {
+    choicePlayer = e.target.textContent.toLowerCase();
+    choiceWinner = round();
+    scoreVariable = score(choiceWinner, scoreVariable);
+    contemporaryPunctuation (textPerson, textComputer, scoreVariable);
+    stopGame(scoreVariable);
 }
-console.log(`---------------------------------`);
-*/
+
+function contemporaryPunctuation (textPerson, textComputer, scoreVariable) {
+    textPerson.textContent = scoreVariable[0];
+    textComputer.textContent = scoreVariable[1];
+}
+
+function stopGame (scoreVariable) {
+    if (scoreVariable[0] >= 5 || scoreVariable[1] >= 5) {
+        btnRock.removeEventListener("click", initialize);
+        btnPaper.removeEventListener("click", initialize);
+        btnScissors.removeEventListener("click", initialize);
+        if (scoreVariable[0] > scoreVariable[1]) {
+            gameResultDisplay.textContent = "You win";
+        } else if (scoreVariable[0] < scoreVariable[1]){
+            gameResultDisplay.textContent = "You lose";
+        } else {
+            gameResultDisplay.textContent = "Nice draw";
+        }
+    }
+}
+
+btnRock.addEventListener("click", initialize);
+btnPaper.addEventListener("click", initialize);
+btnScissors.addEventListener("click", initialize);
 
 function score(choiceWinner, scoreVariable) {
     if (choiceWinner.includes("winner") || choiceWinner.includes("Draw")) {
